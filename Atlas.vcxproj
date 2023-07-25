@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\atlas.h" />
+    <ClInclude Include="src\bff\linear-algebra\include\Cholesky.h" />
+    <ClInclude Include="src\bff\linear-algebra\include\Common.h" />
+    <ClInclude Include="src\bff\linear-algebra\include\DenseMatrix.h" />
+    <ClInclude Include="src\bff\linear-algebra\include\SparseMatrix.h" />
+    <ClInclude Include="src\bff\linear-algebra\include\Vector.h" />
+    <ClInclude Include="src\bff\mesh\include\Corner.h" />
+    <ClInclude Include="src\bff\mesh\include\CutIterator.h" />
+    <ClInclude Include="src\bff\mesh\include\Edge.h" />
+    <ClInclude Include="src\bff\mesh\include\Face.h" />
+    <ClInclude Include="src\bff\mesh\include\HalfEdge.h" />
+    <ClInclude Include="src\bff\mesh\include\Mesh.h" />
+    <ClInclude Include="src\bff\mesh\include\MeshData.h" />
+    <ClInclude Include="src\bff\mesh\include\MeshIO.h" />
+    <ClInclude Include="src\bff\mesh\include\Spline.h" />
+    <ClInclude Include="src\bff\mesh\include\Types.h" />
+    <ClInclude Include="src\bff\mesh\include\Vertex.h" />
+    <ClInclude Include="src\bff\project\include\Bff.h" />
+    <ClInclude Include="src\bff\project\include\BinPacking.h" />
+    <ClInclude Include="src\bff\project\include\ConePlacement.h" />
+    <ClInclude Include="src\bff\project\include\Cutter.h" />
+    <ClInclude Include="src\bff\project\include\DisjointSets.h" />
+    <ClInclude Include="src\bff\project\include\Distortion.h" />
+    <ClInclude Include="src\bff\project\include\Generators.h" />
+    <ClInclude Include="src\bff\project\include\HoleFiller.h" />
+    <ClInclude Include="src\bff\rectangle-bin-pack\include\GuillotineBinPack.h" />
+    <ClInclude Include="src\bff\rectangle-bin-pack\include\Rect.h" />
+    <ClInclude Include="src\Octree.hpp" />
+    <ClInclude Include="src\xatlas\xatlas.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Atlas.cpp" />
+    <ClCompile Include="src\bff\linear-algebra\src\Common.cpp" />
+    <ClCompile Include="src\bff\mesh\src\Corner.cpp" />
+    <ClCompile Include="src\bff\mesh\src\Edge.cpp" />
+    <ClCompile Include="src\bff\mesh\src\Face.cpp" />
+    <ClCompile Include="src\bff\mesh\src\HalfEdge.cpp" />
+    <ClCompile Include="src\bff\mesh\src\Mesh.cpp" />
+    <ClCompile Include="src\bff\mesh\src\MeshIO.cpp" />
+    <ClCompile Include="src\bff\mesh\src\Vertex.cpp" />
+    <ClCompile Include="src\bff\project\src\Bff.cpp" />
+    <ClCompile Include="src\bff\project\src\BinPacking.cpp" />
+    <ClCompile Include="src\bff\project\src\ConePlacement.cpp" />
+    <ClCompile Include="src\bff\project\src\Cutter.cpp" />
+    <ClCompile Include="src\bff\project\src\Distortion.cpp" />
+    <ClCompile Include="src\bff\project\src\Generators.cpp" />
+    <ClCompile Include="src\bff\project\src\HoleFiller.cpp" />
+    <ClCompile Include="src\bff\rectangle-bin-pack\src\GuillotineBinPack.cpp" />
+    <ClCompile Include="src\bff\rectangle-bin-pack\src\Rect.cpp" />
+    <ClCompile Include="src\xatlas\xatlas.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\bff\linear-algebra\include\Cholesky.inl" />
+    <None Include="src\bff\linear-algebra\include\DenseMatrix.inl" />
+    <None Include="src\bff\linear-algebra\include\SparseMatrix.inl" />
+    <None Include="src\bff\linear-algebra\include\Vector.inl" />
+    <None Include="src\bff\mesh\include\CutIterator.inl" />
+    <None Include="src\bff\mesh\include\MeshData.inl" />
+    <None Include="src\bff\mesh\include\Spline.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{6f42279e-5cf6-400a-b3c2-b5907c398a26}</ProjectGuid>
+    <RootNamespace>Atlas</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(NEW_CORE_LIBRARY)\Lib\$(Configuration).$(Platform)\</OutDir>
+    <IntDir>.\tmp.$(Platform)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <OpenMPSupport>true</OpenMPSupport>
+      <AdditionalIncludeDirectories>.\include;.\src\xatlas;.\src\bff\mesh\include;.\src\bff\project\include;.\src\bff\linear-algebra\include;.\src\bff\rectangle-bin-pack\include;$(NEW_CORE_LIBRARY)\Include\TriMesh2;$(THIRDPARTY_PATH)\Eigen3.4.0\include\eigen3;$(THIRDPARTY_PATH)\poly2tri\include;$(THIRDPARTY_PATH)\suitesparse-metis-for-windows-1.5.0\include;$(THIRDPARTY_PATH)\suitesparse-metis-for-windows-1.5.0\include\suitesparse;$(THIRDPARTY_PATH)\OpenBLAS-0.3.20\include;$(THIRDPARTY_PATH)\opencv-4.4.0\build\include;$(THIRDPARTY_PATH)\opencv-4.4.0\build\include\opencv2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy .\include\atlas.h $(NEW_CORE_LIBRARY)\Include\Atlas\  /s /d /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

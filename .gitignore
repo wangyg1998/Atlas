@@ -1,0 +1,146 @@
+*.dll
+*.user
+*.suo
+*.exe
+*.ilk
+*.pdb
+*.recipe
+*.bmp
+*.cmake
+*.bin
+*.idb
+*.VC.db
+VTune Profiler Results/
+
+# Windows build temp cmake file
+CMakeSettings.json
+
+# Docs tar file created by travis deploy
+.travis/*.tar.gz
+
+# CMake configured files
+src/Open3D/Open3DConfig.h
+src/Open3D/Visualization/Shader/Shader.h
+util/pip_package/setup.py
+
+# CMake temp file from Visual Studio
+CMakeSettings.json
+
+# Temp directories
+x64/
+tmp.x64/
+cmake-build-debug/
+cmake-build-release/
+docs/_out/
+util/pip_package/dist/
+util/conda_package/dist/
+doxygen/
+docs/python_api/
+node_modules/
+
+# Local configs
+_vimrc_local.vim
+.vs/
+.vscode/
+.clangd/
+
+# Build artifacts
+**/package-lock.json
+*.pyc
+__pycache__
+._*
+.DS_Store
+.vscode
+.idea
+*.egg-info/
+*.ipynb_checkpoints/
+*.py[cod]
+*.bak
+node_modules/
+static/
+*.old*
+compile_commands.json
+
+# Example resources
+examples/Python/ReconstructionSystem/dataset/
+examples/TestData/fountain_small
+examples/TestData/Armadillo.ply
+examples/TestData/Bunny.ply
+examples/TestData/eagle.ply
+examples/TestData/voxelized.ply
+examples/Python/Basic/voxel_grid_test.ply
+examples/Python/Benchmark/testdata/
+examples/Python/Misc/test.jpg
+examples/TestData/GraphOptimization/pose_graph_example_fragment_optimized.json
+examples/TestData/GraphOptimization/pose_graph_example_global_optimized.json
+examples/TestData/depth/
+examples/TestData/image/
+examples/TestData/sync.ply
+examples/TestData/sync.png
+examples/Python/Advanced/multiway_registration.pcd
+examples/Python/Advanced/test.json
+examples/Python/Advanced/viewpoint.json
+examples/Python/Basic/copy_of_fragment.pcd
+examples/Python/Basic/copy_of_knot.ply
+examples/Python/Basic/copy_of_lena_color.jpg
+examples/Python/Basic/copy_of_crate.mtl
+examples/Python/Basic/copy_of_crate.png
+examples/Python/Basic/copy_of_crate.obj
+
+# doc
+docs/TestData
+docs/tutorial/**/*.ipynb
+docs/tutorial/**/*.py
+docs/tutorial/**/*.jpg
+docs/tutorial/**/*.ply
+docs/tutorial/**/*.pcd
+docs/tutorial/**/*.json
+/build/3rdparty/GLFW/src/glfw.dir/Release
+/build/3rdparty_glew.dir/Release/3rdparty_glew.tlog
+*.log
+/build/3rdparty_jsoncpp.dir/Release/3rdparty_jsoncpp.tlog
+/build/3rdparty_lzf.dir/Release/3rdparty_lzf.tlog
+*.tlog
+/build/3rdparty_qhullcpp.dir/Release
+/build/3rdparty_qhull_r.dir/Release
+/build/3rdparty_rply.dir/Release
+/build/bin
+*.obj
+*.rule
+*.stamp
+*.depend
+/build/3rdparty_glew.dir/Release
+/build/3rdparty_jsoncpp.dir/Release
+/build/3rdparty_lzf.dir/Release
+/build/3rdparty_tinyfiledialogs.dir/Release
+/build/CMakeFiles
+/build/examples/Cpp/EvaluatePCDMatch.dir/Release
+/build/examples/Cpp/PointCloud.dir/Release
+/build/examples/Cpp/RegistrationRANSAC.dir/Release
+/build/examples/Cpp/ViewPCDMatch.dir/Release
+/build/x64/Release/ZERO_CHECK
+/build/src/Open3D/Camera/Camera.dir/Release
+/build/src/Open3D/ColorMap/ColorMap.dir/Release
+/build/src/Open3D/Core/Core.dir/Release
+/build/src/Open3D/Geometry/Geometry.dir/Release
+/build/src/Open3D/Integration/Integration.dir/Release
+/build/src/Open3D/IO/IO.dir/Release
+/build/src/Open3D/Odometry/Odometry.dir/Release
+/build/src/Open3D/Registration/Registration.dir/Release
+/build/src/Open3D/Utility/Utility.dir/Release
+/build/src/Open3D/Visualization/Visualization.dir/Release
+/build/src/Open3D/Visualization/x64/Release/ShaderFileTarget
+/build/src/Tools/EncodeShader.dir/Release
+*.th
+*.sc
+*.aux
+*.xml
+*.metadata
+*.dat
+/build/examples/Cpp/VTune Profiler Results/RegistrationRANSAC/r000hs/sqlite-db/_cache_grouper_data4_global_time_interval_metrics/grouper/0
+/build/examples/Cpp/VTune Profiler Results/RegistrationRANSAC/r000hs/sqlite-db/_cache_grouper_data4_global_data_grouper/grouper/0
+/build/examples/Cpp/VTune Profiler Results/RegistrationRANSAC/r000hs/sqlite-db/timelinedb/dbint-15725/aggregated/0/0
+/build/examples/Cpp/VTune Profiler Results/RegistrationRANSAC/r000hs/sqlite-db/timelinedb/dbint-0042/instance/0/0
+*.db
+*.asc
+*.txt

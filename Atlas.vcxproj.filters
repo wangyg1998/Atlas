@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\xatlas">
+      <UniqueIdentifier>{70008f6d-921c-4b36-8a77-ad25784d21d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\bff">
+      <UniqueIdentifier>{d9d3008b-48b6-4e9d-a733-a5edc1c511dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\bff\linear-algebra">
+      <UniqueIdentifier>{7acbe4c6-1f36-4ad8-80f9-2eff8d9c4231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\bff\mesh">
+      <UniqueIdentifier>{60c06c63-2f79-474d-b95c-e43ccecc4c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\bff\project">
+      <UniqueIdentifier>{8b907aa1-fb0e-4f70-9fa4-39a8f5d89d0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\bff\rectangle-bin-pack">
+      <UniqueIdentifier>{6c02fbcf-b8f2-4dff-b6f3-e396baaa6bbf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\atlas.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Octree.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\xatlas\xatlas.h">
+      <Filter>源文件\xatlas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\linear-algebra\include\Cholesky.h">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\linear-algebra\include\Common.h">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\linear-algebra\include\DenseMatrix.h">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\linear-algebra\include\SparseMatrix.h">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\linear-algebra\include\Vector.h">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Corner.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\CutIterator.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Edge.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Face.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\HalfEdge.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Mesh.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\MeshData.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\MeshIO.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Spline.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Types.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\mesh\include\Vertex.h">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\rectangle-bin-pack\include\GuillotineBinPack.h">
+      <Filter>源文件\bff\rectangle-bin-pack</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\rectangle-bin-pack\include\Rect.h">
+      <Filter>源文件\bff\rectangle-bin-pack</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\Bff.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\BinPacking.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\ConePlacement.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\Cutter.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\DisjointSets.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\Distortion.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\Generators.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bff\project\include\HoleFiller.h">
+      <Filter>源文件\bff\project</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Atlas.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xatlas\xatlas.cpp">
+      <Filter>源文件\xatlas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\linear-algebra\src\Common.cpp">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\Corner.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\Edge.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\Face.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\HalfEdge.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\Mesh.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\MeshIO.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\mesh\src\Vertex.cpp">
+      <Filter>源文件\bff\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\rectangle-bin-pack\src\GuillotineBinPack.cpp">
+      <Filter>源文件\bff\rectangle-bin-pack</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\rectangle-bin-pack\src\Rect.cpp">
+      <Filter>源文件\bff\rectangle-bin-pack</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\Bff.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\BinPacking.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\ConePlacement.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\Cutter.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\Distortion.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\Generators.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bff\project\src\HoleFiller.cpp">
+      <Filter>源文件\bff\project</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\bff\linear-algebra\include\Cholesky.inl">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </None>
+    <None Include="src\bff\linear-algebra\include\DenseMatrix.inl">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </None>
+    <None Include="src\bff\linear-algebra\include\SparseMatrix.inl">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </None>
+    <None Include="src\bff\linear-algebra\include\Vector.inl">
+      <Filter>源文件\bff\linear-algebra</Filter>
+    </None>
+    <None Include="src\bff\mesh\include\CutIterator.inl">
+      <Filter>源文件\bff\mesh</Filter>
+    </None>
+    <None Include="src\bff\mesh\include\MeshData.inl">
+      <Filter>源文件\bff\mesh</Filter>
+    </None>
+    <None Include="src\bff\mesh\include\Spline.inl">
+      <Filter>源文件\bff\mesh</Filter>
+    </None>
+  </ItemGroup>
+</Project>
