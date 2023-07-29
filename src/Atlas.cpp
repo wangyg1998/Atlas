@@ -889,7 +889,7 @@ bool Atlas::computeChart(trimesh::TriMesh* mesh, ChartOptions option, std::vecto
 	//·Ö¸î
 	segmentMeshToChart(mesh_, charts);
 
-	if (true)
+	if (false)
 	{
 		std::shared_ptr<trimesh::TriMesh> debug(new trimesh::TriMesh);
 		debug->vertices = mesh_->vertices;
@@ -907,7 +907,7 @@ bool Atlas::computeChart(trimesh::TriMesh* mesh, ChartOptions option, std::vecto
 				}
 			}
 		}
-		debug->write("D:\\color.ply");
+		debug->write("D:\\ChartResult.ply");
 	}
 
 	std::cout << "computeChart time: " << clock() - time << std::endl;
