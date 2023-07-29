@@ -90,6 +90,9 @@ public:
 
 	static bool laplaceSmoother(trimesh::TriMesh* mesh, int iterNum);
 
+	/// \brief 填充孔洞，排除最大孔洞，不添加新点
+	static void holeFill(trimesh::TriMesh* mesh);
+
 private:
 	float computeCost(Chart& chart, int faceId);
 	float computeBoundaryLength(const Chart& chart, int faceId);

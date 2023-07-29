@@ -208,6 +208,410 @@ static bool flatten(const trimesh::TriMesh& trimesh,
 	return true;
 }
 
+namespace
+{
+using namespace std;
+using namespace trimesh;
+
+// An "edge" type and ordering functor
+typedef pair<int, int> edge;
+class OrderEdge
+{
+public:
+	bool operator()(const edge& e1, const edge& e2) const
+	{
+		if (e1.first < e2.first)
+			return true;
+		else if (e1.first > e2.first)
+			return false;
+		else if (e1.second < e2.second)
+			return true;
+		else
+			return false;
+	}
+};
+typedef set<edge, OrderEdge> edgeset;
+
+// A "hole" type - indices of vertices that make up the hole.
+typedef vector<int> hole;
+
+// A triple of vertices, together with a quality metric
+struct Triple
+{
+	int v1, v2, v3;
+	float quality;
+	Triple(int _v1, int _v2, int _v3, float _q)
+	    : v1(_v1)
+	    , v2(_v2)
+	    , v3(_v3)
+	    , quality(_q)
+	{
+	}
+	bool operator<(const Triple& rhs) const
+	{
+		return quality < rhs.quality;
+	}
+};
+
+#define NO_FACE -1
+struct FaceStruct
+{
+	int v1, v2, v3;
+	int n12, n23, n31;
+	FaceStruct(int _v1, int _v2, int _v3, int _n12 = NO_FACE, int _n23 = NO_FACE, int _n31 = NO_FACE)
+	    : v1(_v1)
+	    , v2(_v2)
+	    , v3(_v3)
+	    , n12(_n12)
+	    , n23(_n23)
+	    , n31(_n31)
+	{
+	}
+};
+
+struct VertStruct
+{
+	point p;
+	vec norm;
+	float& operator[](int i)
+	{
+		return p[i];
+	}
+	const float& operator[](int i) const
+	{
+		return p[i];
+	}
+	VertStruct()
+	{
+	}
+	VertStruct(const point& _p, const vec& _norm)
+	{
+		p[0] = _p[0];
+		p[1] = _p[1];
+		p[2] = _p[2];
+		norm[0] = _norm[0];
+		norm[1] = _norm[1];
+		norm[2] = _norm[2];
+	}
+};
+
+// Find all the boundary edges
+edgeset* find_boundary_edges(const TriMesh* themesh)
+{
+	//printf("Finding boundary edges... ");
+	fflush(stdout);
+	edgeset* edges = new edgeset;
+
+	for (size_t f = 0; f < themesh->faces.size(); f++)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			int v1 = themesh->faces[f][i];
+			int v2 = themesh->faces[f][NEXT_MOD3(i)];
+
+			// Opposite-pointing edges cancel each other
+			if (!edges->erase(make_pair(v2, v1)))
+				edges->insert(make_pair(v1, v2));
+		}
+	}
+
+	//printf("Done.\n");
+	return edges;
+}
+
+// Find the initial (before hole-filling) neighbors of all the boundary verts
+void find_initial_edge_neighbors(const TriMesh* themesh, const edgeset* edges, map<int, set<int>>& initial_edge_neighbors)
+{
+	size_t nv = themesh->vertices.size(), nf = themesh->faces.size();
+	vector<bool> is_edge(nv);
+	for (edgeset::const_iterator i = edges->begin(); i != edges->end(); i++)
+	{
+		is_edge[i->first] = true;
+		is_edge[i->second] = true;
+	}
+
+	for (size_t i = 0; i < nf; i++)
+	{
+		int v1 = themesh->faces[i][0];
+		int v2 = themesh->faces[i][1];
+		int v3 = themesh->faces[i][2];
+		if (is_edge[v1])
+		{
+			initial_edge_neighbors[v1].insert(v2);
+			initial_edge_neighbors[v1].insert(v3);
+		}
+		if (is_edge[v2])
+		{
+			initial_edge_neighbors[v1].insert(v3);
+			initial_edge_neighbors[v1].insert(v1);
+		}
+		if (is_edge[v3])
+		{
+			initial_edge_neighbors[v1].insert(v1);
+			initial_edge_neighbors[v1].insert(v2);
+		}
+	}
+}
+
+// Find a list of holes, given the boundary edges
+vector<hole>* find_holes(edgeset* edges)
+{
+	//printf("Finding holes... ");
+	fflush(stdout);
+	vector<hole>* holelist = new vector<hole>;
+	edgeset badedges;
+
+	while (!edges->empty())
+	{
+		// Find an edge at which to start
+		const edge& firstedge = *(edges->begin());
+		int firstvert = firstedge.first;
+		int lastvert = firstedge.second;
+		edges->erase(edges->begin());
+
+		// Add the verts as the first two in a new hole
+		holelist->push_back(hole());
+		hole& newhole = holelist->back();
+		newhole.push_back(firstvert);
+		newhole.push_back(lastvert);
+
+		// Follow edges to find the rest of this hole
+		while (1)
+		{
+			// Find an edge that starts at lastvert
+			edgeset::iterator ei = edges->upper_bound(make_pair(lastvert, -1));
+			if (ei == edges->end() || ei->first != lastvert)
+			{
+				fprintf(stderr, "\nCouldn't find an edge out of vert %d\n", lastvert);
+				exit(1);
+			}
+			int nextvert = ei->second;
+			edges->erase(ei);
+
+			// Are we done?
+			if (nextvert == firstvert)
+				break;
+
+			// Have we encountered this vertex before in this hole?
+			// XXX - linear search.  Yuck.
+			hole::iterator hi = find(newhole.begin(), newhole.end(), nextvert);
+			if (hi != newhole.end())
+			{
+				// Assuming everything is OK topologically,
+				// this could only have been caused if there
+				// was a choice of ways to go the last time
+				// we encountered this vertex.  Obviously,
+				// we chose the wrong way, so find a different
+				// way to go.
+				edgeset::iterator nei = edges->upper_bound(make_pair(nextvert, -1));
+				if (nei == edges->end() || nei->first != nextvert)
+				{
+					fprintf(stderr, "\nCouldn't find an edge out of vert %d\n", nextvert);
+					exit(1);
+				}
+				// XXX - for paranoia's sake, we should check
+				// that nei->second is not in newhole
+
+				// Put the bad edges into "badedges"
+				for (hole::iterator tmp = hi; tmp + 1 != newhole.end(); tmp++)
+					badedges.insert(make_pair(*tmp, *(tmp + 1)));
+				badedges.insert(make_pair(lastvert, nextvert));
+				newhole.erase(hi + 1, newhole.end());
+
+				// Take the new edge, and run with it
+				lastvert = nei->second;
+				newhole.push_back(lastvert);
+				edges->erase(nei);
+			}
+			else
+			{
+				// All OK.  Add this vert to the hole and go on
+				newhole.push_back(nextvert);
+				lastvert = nextvert;
+			}
+		}
+		edges->insert(badedges.begin(), badedges.end());
+		badedges.clear();
+	}
+
+	//printf("Done.\n");
+	return holelist;
+}
+
+// Compute a quality metric for a potential triangle with three vertices
+inline float quality(const TriMesh* themesh, float meanedgelen, const vector<VertStruct>& newverts, int v1, int v2, int v3, bool hack = false)
+{
+#define VERT(v) ((size_t(v) < themesh->vertices.size()) ? themesh->vertices[v] : newverts[size_t(v) - themesh->vertices.size()].p)
+#define NORM(v) ((size_t(v) < themesh->vertices.size()) ? themesh->normals[v] : newverts[size_t(v) - themesh->vertices.size()].norm)
+
+	if (v1 == v2 || v2 == v3 || v3 == v1)
+		return -1000.0f;
+
+	const point& p1 = VERT(v1);
+	const point& p2 = VERT(v2);
+	const point& p3 = VERT(v3);
+	vec side1 = p1 - p2, side2 = p2 - p3, side3 = p3 - p1;
+
+	vec norm = side2 CROSS side1;
+	normalize(norm);
+
+	float dot1 = norm DOT NORM(v1);
+	float dot2 = norm DOT NORM(v2);
+	float dot3 = norm DOT NORM(v3);
+	if (dot1 < -0.999f || dot2 < -0.999f || dot3 < -0.999f)
+		return -1000.0f;
+
+	float len1 = len(side1);
+	float len2 = len(side2);
+	float len3 = len(side3);
+
+	float maxedgelen = max(max(len1, len2), len3);
+	//float minedgelen = min(min(len1,len2),len3);
+
+	normalize(side1);
+	normalize(side2);
+	normalize(side3);
+
+	float f = dot1 / (1.0f + dot1) + dot2 / (1.0f + dot2) + dot3 / (1.0f + dot3);
+
+	//float d = meanedgelen/(maxedgelen+meanedgelen);
+	float d1 = 1.0f + maxedgelen / meanedgelen;
+	//d1 = sqrt(d1);
+	//float d = 0;
+
+	float a;
+	if (hack)
+	{
+		//a = 0.1f*sqr(2.0f+Dot(side1, side2));
+		a = 2.0f + (side1 DOT side2);
+		//a = sqrt(1.0f/(1.0f - a));
+	}
+	else
+	{
+		a = sqr(1.0f + (side1 DOT side2)) + sqr(1.0f + (side2 DOT side3)) + sqr(1.0f + (side3 DOT side1));
+	}
+
+	return f * sqrt(d1) - a * d1;
+}
+
+// Fill the given hole, and add the newly-created triangles to newtris
+// XXX - FIXME!  This is O(n^2)
+void fill_hole(const TriMesh* themesh,
+               float meanedgelen,
+               const vector<VertStruct>& newverts,
+               map<int, set<int>>& initial_edge_neighbors,
+               const hole& thehole,
+               vector<FaceStruct>& newtris)
+{
+	vector<bool> used(thehole.size(), false);
+
+	priority_queue<Triple> q;
+	for (size_t i = 0; i < thehole.size(); i++)
+	{
+		int j = (i + 1) % thehole.size();
+		int k = (j + 1) % thehole.size();
+		float qual = quality(themesh, meanedgelen, newverts, thehole[i], thehole[j], thehole[k], true);
+		if (initial_edge_neighbors[thehole[i]].find(thehole[k]) != initial_edge_neighbors[thehole[i]].end())
+			qual = -1000.0f;
+		q.push(Triple(i, j, k, qual));
+	}
+
+	while (!q.empty())
+	{
+		// Take the highest-quality triple off the queue
+		const Triple next = q.top();
+		q.pop();
+
+		// Ignore triangles referencing already-used verts
+		if (!used[next.v1] && !used[next.v3])
+		{
+			used[next.v2] = true;
+
+			// Create the new face and push it onto newtris
+			newtris.push_back(FaceStruct(thehole[next.v3], thehole[next.v2], thehole[next.v1]));
+
+			// Find next verts forward and back
+			int forw = next.v3;
+			do
+			{
+				forw++;
+				forw %= thehole.size();
+			} while (used[forw]);
+			if (forw == next.v1)
+				return;
+			int back = next.v1;
+			do
+			{
+				back--;
+				if (back < 0)
+					back += thehole.size();
+			} while (used[back]);
+
+			// Insert potential new triangles
+			float q13f = quality(themesh, meanedgelen, newverts, thehole[next.v1], thehole[next.v3], thehole[forw], true);
+			if (initial_edge_neighbors[thehole[next.v1]].find(thehole[forw]) != initial_edge_neighbors[thehole[next.v1]].end())
+				q13f = -2000.0f;
+			float qb13 = quality(themesh, meanedgelen, newverts, thehole[back], thehole[next.v1], thehole[next.v3], true);
+			if (initial_edge_neighbors[thehole[back]].find(thehole[next.v3]) != initial_edge_neighbors[thehole[back]].end())
+				qb13 = -2000.0f;
+			q.push(Triple(next.v1, next.v3, forw, q13f));
+			q.push(Triple(back, next.v1, next.v3, qb13));
+		}
+	}
+}
+
+} // namespace
+
+void Atlas::holeFill(trimesh::TriMesh* mesh)
+{
+	if (mesh == nullptr || mesh->faces.empty())
+	{
+		return;
+	}
+
+	mesh->need_normals();
+	edgeset* edges = find_boundary_edges(mesh);
+	map<int, set<int>> initial_edge_neighbors;
+	find_initial_edge_neighbors(mesh, edges, initial_edge_neighbors);
+	vector<hole>* holes = find_holes(edges);
+	delete edges;
+	float mel = mesh->feature_size();
+
+	int maxHoleSize = 0;
+	for (int i = 0; i < holes->size(); ++i)
+	{
+		maxHoleSize = std::max<int>(maxHoleSize, (*holes)[i].size());
+	}
+
+	vector<FaceStruct> newtris;
+	vector<VertStruct> newverts;
+	for (size_t i = 0; i < holes->size(); i++)
+	{
+		if (maxHoleSize == (*holes)[i].size())
+		{
+			continue;
+		}
+		vector<FaceStruct> tmptris;
+		fill_hole(mesh, mel, newverts, initial_edge_neighbors, (*holes)[i], tmptris);
+		copy(tmptris.begin(), tmptris.end(), back_inserter(newtris));
+	}
+	delete holes;
+	mesh->normals.clear();
+
+	mesh->vertices.reserve(mesh->vertices.size() + newverts.size());
+	for (size_t i = 0; i < newverts.size(); i++)
+	{
+		mesh->vertices.push_back(newverts[i].p);
+	}
+	mesh->faces.reserve(mesh->faces.size() + newtris.size());
+	for (size_t i = 0; i < newtris.size(); i++)
+	{
+		mesh->faces.push_back(TriMesh::Face(newtris[i].v1, newtris[i].v2, newtris[i].v3));
+	}
+
+	return;
+}
+
 bool Atlas::laplaceSmoother(trimesh::TriMesh* mesh, int iterNum)
 {
 	clock_t time = clock();
@@ -1561,10 +1965,13 @@ bool Atlas::parameterization(Chart& chart)
 	{
 		return false;
 	}
+	int oldFacesSize = mesh->faces.size();
+	holeFill(mesh);
 	if (!flatten(*mesh, chart.uvs, false, 0, false, false, false))
 	{
 		return false;
 	}
+	mesh->faces.resize(oldFacesSize);
 	return true;
 }
 

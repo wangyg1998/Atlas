@@ -21,6 +21,7 @@ int main()
 	atlas.computeChart(mesh.get(), option, charts);
 
 	std::cout << "error count: " << atlas.parameterization(charts) << std::endl;
+
 	std::vector<atlas::UV> uvs;
 	std::vector<trimesh::TriMesh::Face> facesUvId;
 	cv::Mat img;
