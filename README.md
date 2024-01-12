@@ -1,4 +1,5 @@
 # Atlas
+mesh segmentation, parameterization, and texture atlas packing.
 
 ## reference
 [1] Least Squares Conformal Maps for Automatic Texture Atlas Generation: <https://www.cs.jhu.edu/~misha/Fall09/Levy02.pdf>  
